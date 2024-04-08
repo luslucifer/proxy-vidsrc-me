@@ -1,8 +1,10 @@
 import requests
 from flask import Flask, request
+from flask_cors import CORS  # Import CORS from flask_cors module
 import os 
 
 app = Flask(__name__)
+CORS(app)  # Initialize CORS extension with your Flask app
 
 @app.route('/')
 def home(): 
