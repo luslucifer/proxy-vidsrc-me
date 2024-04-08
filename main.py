@@ -25,7 +25,7 @@ def fetch():
             for index,line in enumerate(splited): 
                 line = line.replace(' ', '')
                 if line.startswith('https://'):
-                    splited[index]=f'http://{host}/fetch?url={line}'
+                    splited[index]=f'https://{host}/fetch?url={line}'
             joined = '\n'.join(splited)
             return joined
         
