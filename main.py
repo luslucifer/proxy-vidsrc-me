@@ -3,6 +3,7 @@ from flask import Flask, request
 from flask_cors import CORS  # Import CORS from flask_cors module
 import os 
 
+
 app = Flask(__name__)
 CORS(app)  # Initialize CORS extension with your Flask app
 
@@ -12,11 +13,23 @@ def home():
 
 @app.route('/fetch')
 def fetch():
+    host = request.host
     url = request.args.get('url')  # Get the 'url' query parameter
     if url:
-        # You can use requests.get() here to fetch the content of the provided URL
-        res = requests.get(url).content
-        return res
+        res = requests.get(url)
+        content = res.content
+        text =res.text
+
+        if url.replace(' ','').endswith('.m3u8'):
+            splited = text.splitlines()
+            for index,line in enumerate(splited): 
+                line = line.replace(' ', '')
+                if line.startswith('https://'):
+                    splited[index]=f'http://{host}/fetch?url={line}'
+            joined = '\n'.join(splited)
+            return joined
+        
+        return content
     else:
         return 'No URL provided'
 

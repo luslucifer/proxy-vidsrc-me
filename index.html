@@ -1,0 +1,23 @@
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+<!-- Or if you want the latest version from the main branch -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@canary"></script> -->
+<video id="video" autoplay controls></video>
+<script>
+  var video = document.getElementById('video');
+  var videoSrc = 'https://proxy-vidsrc-me-0e71f022c893.herokuapp.com/fetch?url=https%3A%2F%2Ftmdrv.vidsrc.stream%2Fstream%2FH4sIAAAAAAAAAwXB3XqCIAAA0FcSzNLdrYKlBQ1EFO_kZ_mRtLb8svH0O2fl8o2160wnUOe2yJw1g0mKYpW7L1c48CbSkQiBI0nHqFP.7FH_zeN7ZH58ucB3tO2hRvasOrtoqaKb7qC.qUx4XuobWYaDVSw0iRGXJ4FzadD8qVpQavhIXcAvKu2JIPvD4_Z4Sqg_73LYYHyz6FXR1M4KVJR5Gw1mcEimIz3IRfvybwDjycBZmOtM68MVyj1nBEgsJypkmNV5X_2a7u7b5o71tGXW9.umfsQhZIhHOhHEngME0YnL4oLc1i2O4gNQFqrOYS5Ywx.9YNk_mnYQKSEBAAA-%2Fmaster.m3u8';
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+  }
+  // HLS.js is not supported on platforms that do not have Media Source
+  // Extensions (MSE) enabled.
+  //
+  // When the browser has built-in HLS support (check using `canPlayType`),
+  // we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video
+  // element through the `src` property. This is using the built-in support
+  // of the plain video element, without using HLS.js.
+  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = videoSrc;
+  }
+</script>
