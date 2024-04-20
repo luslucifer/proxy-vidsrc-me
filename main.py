@@ -14,6 +14,8 @@ def home():
 @app.route('/fetch')
 def fetch():
     host = request.host
+    splitedh =host.split(':')
+    port = splitedh[1] 
     url = request.args.get('url')  # Get the 'url' query parameter
     if url:
         res = requests.get(url)
@@ -25,13 +27,13 @@ def fetch():
             for index,line in enumerate(splited): 
                 line = line.replace(' ', '')
                 if line.startswith('https://'):
-                    splited[index]=f'https://{host}/fetch?url={line}'
+                    splited[index]=f'http://172.232.43.70:{port}/fetch?url={line}'
             joined = '\n'.join(splited)
             return joined
         
         return content
     else:
-        return 'No URL provided'
+        return port
 
 if __name__ == '__main__':
     app.run()
